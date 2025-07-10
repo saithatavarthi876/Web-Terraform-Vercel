@@ -1,0 +1,139 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+}
+
+header {
+    background-color: #1e88e5;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    margin: 0 12px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 30px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.screenshot {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.screenshot h3 {
+    margin-bottom: 10px;
+}
+
+.screenshot img {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+.task-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.task-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.task-card h3 {
+    margin-top: 0;
+    color: #1e88e5;
+}
+ /* .task-block {
+    background-color: white;
+    margin: 20px auto;
+    padding: 25px;
+    max-width: 700px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.task-block h3 {
+    color: #1e88e5;
+    margin-bottom: 10px;
+}
+
+.task-block p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+} */
+.task-block {
+    background-color: white;
+    margin: 20px auto;
+    padding: 25px;
+    max-width: 700px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.task-block:hover {
+    box-shadow: 0 0 20px rgba(30, 136, 229, 0.5); /* blue glow */
+    border: 2px solid #1e88e5;
+    transform: translateY(-5px);
+    background-color: #f0faff;
+}
+
+.doc-button {
+    display: inline-block;
+    background-color: #1e88e5;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.doc-button:hover {
+    background-color: #1565c0;
+} 
