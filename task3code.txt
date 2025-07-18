@@ -1,0 +1,91 @@
+provider "aws" {
+  region = var.region
+}
+
+variable "region" {
+  default = "us-east-1"
+}
+
+variable "bucket_name" {
+  default = "bytewave-website-saii"
+}
+
+# 1. Create S3 Bucket
+resource "aws_s3_bucket" "static_site" {
+  bucket = var.bucket_name
+  
+  tags = {
+    Name        = "ByteWave Website"
+    Environment = "Dev"
+  }
+}
+
+# 2. Configure Website Hosting (new format)
+resource "aws_s3_bucket_website_configuration" "website_config" {
+  bucket = aws_s3_bucket.static_site.id
+  
+  index_document {
+    suffix = "index.html"
+  }
+}
+
+# 3. Enable ACL ownership
+resource "aws_s3_bucket_ownership_controls" "s3_bucket_acl_ownership" {
+  bucket = aws_s3_bucket.static_site.id
+  
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+# 4. Remove public access restrictions
+resource "aws_s3_bucket_public_access_block" "public_access" {
+  bucket                  = aws_s3_bucket.static_site.id
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+# 5. Set Bucket ACL (public-read) - depends on ownership controls and public access block
+resource "aws_s3_bucket_acl" "site_acl" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership,
+    aws_s3_bucket_public_access_block.public_access
+  ]
+  
+  bucket = aws_s3_bucket.static_site.id
+  acl    = "public-read"
+}
+
+# 6. Attach Bucket Policy - depends on public access block
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  depends_on = [aws_s3_bucket_public_access_block.public_access]
+  
+  bucket = aws_s3_bucket.static_site.id
+  
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.static_site.arn}/*"
+      }
+    ]
+  })
+}
+
+# 7. Upload index.html
+resource "aws_s3_object" "website_file" {
+  bucket       = aws_s3_bucket.static_site.id
+  key          = "index.html"
+  source       = "${path.module}/index.html"
+  content_type = "text/html"
+}
+
+# 8. Output Website Endpoint
+output "website_url" {
+  value = "http://${aws_s3_bucket.static_site.bucket}.s3-website-${var.region}.amazonaws.com"
+}

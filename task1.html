@@ -20,6 +20,47 @@
     </header>
     <main> 
         <h2>Launch a Basic EC2 Instance using Terraform on AWS</h2>
+        <div class="installation-section" style="
+  background-color: #ffffff;
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+">
+  <h2 style="color:#180218; font-weight: 600;text-align: left;">Terraform Installation Guide (Windows)</h2>
+
+  <h3 style="color: black; margin-top: 25px;">Step 1: Download Terraform</h3>
+  <p>Download and install Terraform on your Windows system for AWS infrastructure management.</p>
+  <ul>
+    <li>Go to <a href="https://developer.hashicorp.com/terraform/downloads" target="_blank" style="color: #2980b9;">Terraform Downloads Page</a></li>
+    <li>Download the <strong>Windows AMD64</strong> zip file</li>
+    <li>Extract the zip file to a folder (e.g., <code>C:\terraform</code>)</li>
+    <li>Add Terraform to your <strong>PATH</strong> environment variable</li>
+  </ul>
+
+  <h3 style="color:black; margin-top: 25px;">Step 2: Environment Setup</h3>
+  <p>Configure the PATH variable and verify the Terraform installation:</p>
+  <ul>
+    <li>Press <strong>Windows + R</strong>, type <code>sysdm.cpl</code>, and press Enter</li>
+    <li>Click on <strong>Environment Variables</strong></li>
+    <li>Under <strong>System Variables</strong>, find and select <strong>Path</strong></li>
+    <li>Click <strong>Edit</strong> → <strong>New</strong></li>
+    <li>Add the path where Terraform was extracted (e.g., <code>C:\terraform</code>)</li>
+    <li>Click <strong>OK</strong> on all dialogs to save changes</li>
+  </ul>
+
+  <h3 style="color: black; margin-top: 25px;">Step 3: Verify Installation</h3>
+  <p>Confirm Terraform is properly installed and accessible:</p>
+  <ul>
+    <li>Open <strong>Command Prompt</strong> or <strong>PowerShell</strong></li>
+    <li>Run the command: <code>terraform --version</code></li>
+    <li>Check that the version information is displayed</li>
+    <li>This confirms that the PATH variable is configured correctly</li>
+  </ul>
+</div>
+
 
         <div class="screenshot">
             <h3>Step 1: Create main.tf and Define Infrastructure</h3>

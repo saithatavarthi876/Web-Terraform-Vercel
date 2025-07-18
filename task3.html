@@ -2,8 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Task 1 - Documentation</title>
+    <title>Task 3 - Documentation</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+.download-section {
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.download-section h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.download-btn {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}
+</style>
+
 </head>
 <body style="background-color: #f4f4ff;">
 
@@ -19,28 +50,142 @@
         </nav>
     </header>
     <main> 
-        <h2>Task 3 Documentation</h2>
+        
+
+
+
 
         <div class="screenshot">
-            <h3>Step 1: Initial Setup</h3>
-            <img src="Screenshot (7).png" alt="Step 1">
+          <h2>This is the task given</h2>
+          <img src="images/Screenshot 2025-07-14 232156.png" alt="">
         </div>
 
         <div class="screenshot">
-            <h3>Step 2: Configuration</h3>
-            <img src="Screenshot (7).png" alt="Step 2">
+            
+            <div class="download-section">
+ 
+  <a href="task3code.txt" target="_blank" class="download-btn">View Task Code</a>
+  <a href="task3code.txt" download class="download-btn">Download Task Code</a>
+</div>
+<h3>Step 1: Create Website & main.tf</h3>
+            <p>Create a simple static website (e.g., index.html) and a Terraform configuration file (main.tf) in the same folder to define your AWS S3 bucket and website settings.</p>
+          <img src="images/Screenshot (29).png" alt="">
+        </div>
+
+
+        <div class="screenshot">
+            <h3>Step 2: Initialize & Apply Terraform</h3>
+            <p>Run <code>terraform init</code> to initialize your configuration, then <code>terraform apply</code> to deploy your static website to AWS S3.</p>
+          <img src="images/Screenshot (33).png" alt="">
+          <img src="images/Screenshot (34).png" alt="">
         </div>
 
         <div class="screenshot">
-            <h3>Step 3: Execution</h3>
-            <img src="Screenshot (7).png" alt="Step 3">
+          <h3>Step 3: Verify Website Deployment</h3>
+          <p>After applying the configuration, copy the provided URL and open it in your browser to confirm that your static website is live.</p>
+          <img src="images/Screenshot (35).png" alt="">
+          <img src="images/Screenshot (36).png" alt="">
         </div>
 
         <div class="screenshot">
-            <h3>Step 4: Output</h3>
-            <img src="Screenshot (7).png" alt="Step 4">
+            <h3>Step 4: Check the S3 Bucket in AWS Console for Confirmation</h3>
+            <p>Go to AWS Console &rarr; S3 &rarr; Buckets and verify that your bucket has been created successfully.</p>
+          <img src="images/Screenshot (37).png" alt="">
+        ></div>
+
+        <div class="screenshot">
+          <h2>This is the task given</h2>
+          <img src="images/Screenshot 2025-07-14 195310.png" alt="">
+        </div>
+       
+        <div class="screenshot">
+           <div class="download-section">
+  
+  <a href="cloudnova-terraform.txt" target="_blank" class="download-btn">View Terraform Code</a>
+  <a href="cloudnova-terraform.txt" download class="download-btn">Download Terraform Code</a>
+
+</div>
+            <h3>Step 1: Create main.tf and Define Infrastructure</h3>
+            <h3> Terraform Code for CloudNova Dev Server in main.tf file---The code given below is a Terraform configuration provisions a t2.micro EC2 instance with Python3 and Git pre-installed via a user data script.</h3>
+          <img src="images/Screenshot (22).png" alt="">
+            </div>
+
+         <!-- <div class="screenshot">
+          <img src="images/Screenshot (22).png" alt="">
+         </div> -->
+
+          <div class="screenshot">
+            <h3>Step 2:Create a Key Pair in AWS (for SSH Access) and Set Proper File Permissions on the Key</h3>
+            <pre>aws ec2 create-key-pair --key-name cloudnova-dev-key --query "KeyMaterial" --output text > cloudnova-dev-key.pem
+</pre>
+            <p> To create key-pair cloudnova-dev-key and saves the private key to cloudnova-dev-key.pem</p>
+            <pre>icacls cloudnova-dev-key.pem /inheritance:r
+icacls cloudnova-dev-key.pem /grant:r "%USERNAME%:R"</pre>
+            <p> This command:Removes inheritance and grants read permission to the current user on the key file.</p>
+            <img src="images/Screenshot (23).png" alt="">
+          </div>
+
+      
+
+        <div class="screenshot">
+            <h3>Step 3: Initialize Terraform and Apply the Configuration</h3>
+            <img src="images/Screenshot (24).png" alt="Step 2">
+            <img src="images/Screenshot (25).png" alt="">
+        </div>
+
+      
+
+        <div class="screenshot">
+            <h3>Step 4:  Verify Instance in AWS Console</h3>
+            <p><pre>Go to AWS Console → EC2 → Instances
+
+Confirm:
+
+Name: CloudNova-Dev-Server
+
+Type: t2.micro
+
+Public IP/DNS is available</pre></p>
+            <img src="images/Screenshot (26).png" alt="Step 4">
+        </div>
+
+          <div class="screenshot">
+            <h3>Step 5: SSH into the Server</h3>
+            <img src="images/Screenshot (28).png" alt="">
+<p>Use the command <code>ssh -i cloudnova-dev-key.pem ec2-user@&lt;public-ip&gt;</code> in your terminal to connect to the EC2 instance. Replace <code>&lt;public-ip&gt;</code> with the actual public IP address shown in the Terraform output or AWS Console.</p>
+   
+        </div>
+        <div class="screenshot">
+            <h3>Step 6: Output the public ip of EC2 instance</h3>
+            <p></p>
+            <img src="images/Screenshot 2025-07-11 143934.png" alt="">
+        </div>
+        <div class="screenshot">
+            <h3>Step 7: Verify Python and Git Installation</h3>
+            <p>Run the following commands to verify that Python3 and Git are installed: python --version</p>
+        
+            <img src="images/Screenshot (27).png" alt="">
+            <mark>NOTE: Terminate the instance after task completion (Optional)</mark>
         </div>
     </main>
+    <!-- Highlight.js CSS & Script -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+<!-- Load Terraform code dynamically -->
+<script>
+  fetch('cloudnova-terraform.txt')
+    .then(response => response.text())
+    .then(text => {
+      const codeBlock = document.getElementById('terraform-code');
+      codeBlock.textContent = text;
+      hljs.highlightElement(codeBlock);
+    })
+    .catch(err => {
+      document.getElementById('terraform-code').textContent = 'Failed to load Terraform code: ' + err;
+    });
+</script>
+
 </body>
 </html>
 

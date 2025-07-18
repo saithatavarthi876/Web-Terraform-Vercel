@@ -1,0 +1,147 @@
+# CloudNova Inc. - EC2 Development Server
+# Terraform configuration for deploying a Python development environment
+
+# Configure the AWS Provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+  required_version = ">= 1.0"
+}
+
+# Configure AWS Provider
+provider "aws" {
+  region = var.aws_region
+}
+
+# Variables
+variable "aws_region" {
+  description = "AWS region for resources"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "key_name" {
+  description = "AWS Key Pair name for SSH access"
+  type        = string
+  default     = "cloudnova-dev-key"
+}
+
+# Data source to get the latest Amazon Linux 2 AMI
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+# Create Security Group for SSH access
+resource "aws_security_group" "cloudnova_dev_sg" {
+  name        = "cloudnova-dev-security-group"
+  description = "Security group for CloudNova development server"
+
+  # Allow SSH inbound traffic
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "CloudNova-Dev-SG"
+    Project = "CloudNova-Dev"
+  }
+}
+
+# User data script to install Python3 and Git
+locals {
+  user_data = <<-EOF
+    #!/bin/bash
+    yum update -y
+    yum install -y python3 git
+    # Create a symbolic link for python command
+    ln -s /usr/bin/python3 /usr/bin/python 
+    # Install pip3
+    yum install -y python3-pip
+    
+    # Create a welcome message
+    echo "CloudNova Development Server Setup Complete!" > /home/ec2-user/welcome.txt
+    echo "Python3 and Git have been installed successfully." >> /home/ec2-user/welcome.txt
+    echo "Server provisioned on: $(date)" >> /home/ec2-user/welcome.txt
+    chown ec2-user:ec2-user /home/ec2-user/welcome.txt
+  EOF
+}
+
+# Create EC2 instance
+resource "aws_instance" "cloudnova_dev_server" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  
+  # Associate security group
+  vpc_security_group_ids = [aws_security_group.cloudnova_dev_sg.id]
+  
+  # User data script
+  user_data = base64encode(local.user_data)
+  
+  # Enable detailed monitoring (optional)
+  monitoring = true
+  
+  tags = {
+    Name = "CloudNova-Dev-Server"
+    Project = "CloudNova-Development"
+    Environment = "Development"
+    Owner = "CloudNova-Inc"
+  }
+}
+
+# Output the public IP address
+output "instance_public_ip" {
+  description = "Public IP address of the CloudNova development server"
+  value       = aws_instance.cloudnova_dev_server.public_ip
+}
+
+# Output the public DNS name
+output "instance_public_dns" {
+  description = "Public DNS name of the CloudNova development server"
+  value       = aws_instance.cloudnova_dev_server.public_dns
+}
+
+# Output the instance ID
+output "instance_id" {
+  description = "Instance ID of the CloudNova development server"
+  value       = aws_instance.cloudnova_dev_server.id
+}
+
+# Output SSH connection command
+output "ssh_connection_command" {
+  description = "SSH command to connect to the server"
+  value       = "ssh -i ${var.key_name}.pem ec2-user@${aws_instance.cloudnova_dev_server.public_ip}"
+}
