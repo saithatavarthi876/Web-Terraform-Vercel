@@ -19,27 +19,85 @@
         </nav>
     </header>
     <main> 
-        <h2>Task 4 Documentation</h2>
-        
+        <h2> Create the Following Resources in AWS </h2>
+        <h3 style="text-align: center;">For each service below, create the simplest working setup</h3>
+
         <div class="screenshot">
-            <h3>Step 1: </h3>
-            <img src="images/Screenshot (12).png" alt="Step 1">
+            <h3>"Amazon EC2"-->Launch a t2.micro instance with Amazon Linux 2</h3>
+            <p>Create main.tf file and configure the provider and use aws configure to give your credentials</p>
+            <img src="images/Screenshot (47).png" alt="Step 1">
+            <p>Initialize and apply the terraform configuration</p>
+            <img src="images/Screenshot (48).png" alt="Step 2">
+            <p>If you do not specify a VPC in your Terraform code, AWS will use the default VPC. 
+                If your account does not have a default VPC, you can create one using the AWS CLI command: <code>aws ec2 create-default-vpc</code>.</p>
+            <img src="images/Screenshot (49).png" alt="Step 3">
+            <p>Verify the instance is running in the AWS Console</p>
+            <img src="images/Screenshot (50).png" alt="Step 4">
         </div>
 
         <div class="screenshot">
-            <h3>Step 2: Configuration</h3>
-            <img src="images/Screenshot (12).png" alt="Step 2">
+            <h3>"Amazon VPC"-->Create a custom VPC with 1 public subnet and Internet Gateway</h3>
+            <p>Step 1: Create a <code>vpc.tf</code> file with the code to define a custom VPC, a public subnet, and an Internet Gateway:</p>
+     
+            <img src="images/Screenshot (51).png" alt="Step 1">
+            <p>Step 2: Initialize, validate, and apply the Terraform configuration:</p>
+            <img src="images/Screenshot (53).png" alt="Step 2">
+            <p>Step 3: Go to AWS Console → VPC → Your VPCs to Verify the VPC and subnet</p>
+            <img src="images/Screenshot (52).png" alt="Step 3">
         </div>
 
         <div class="screenshot">
-            <h3>Step 3: Execution</h3>
-            <img src="images/Screenshot (12).png" alt="Step 3">
+            <h3>"AWS Lambda"--> Create a simple Lambda function (e.g., Hello World in Python)</h3>
+            <p>Step 1:Create a <code>main.tf</code> file with the code to define a simple AWS Lambda function using Terraform:</p>
+
+            <img src="images/Screenshot (56).png" alt="Step 3">
+            <p>Step 2: Initialize, validate, and apply the Terraform configuration:</p>
+            <img src="images/Screenshot (57).png" alt="Step 4  ">
+            <p>Step 3: Verify the Lambda function is created in the AWS Console</p>
+            <img src="images/Screenshot (58).png" alt="Step 5">
         </div>
 
         <div class="screenshot">
-            <h3>Step 4: Output</h3>
-            <img src="images/Screenshot (12).png" alt="Step 4">
+            <h3>"Amazon S3"--> Create a private bucket with versioning enable</h3>
+            <p>Step 1: Create a <code>s3.tf</code> file with the code to define a private S3 bucket with versioning enabled:</p>
+            <img src="images/Screenshot (59).png" alt="Step 1">
+            <p>Step 2: Initialize, validate, and apply the Terraform configuration:</p>
+            <img src="images/Screenshot (60).png" alt="Step 2">
+            <img src="images/Screenshot (61).png" alt="">
+            <p>Step 3: Verify the S3 bucket is created in the AWS Console</p>
+            <img src="images/Screenshot (62).png" alt="Step 3">
         </div>
+
+        <div class="screenshot">
+           <h3>"Amazon EBS" --> Attach a 10GB EBS volume to your EC2 instance</h3>
+            <p>Step 1: Create a <code>main.tf</code> file with the complete Terraform configuration to create an EC2 instance and attach a 10GB EBS volume:</p>
+            <img src="images/Screenshot (63).png" alt="Step 1">
+            <p>Step 2: Initialize, validate, and apply the Terraform configuration:</p>
+            <img src="images/Screenshot (64).png" alt="Step 2">
+            <p>Step 3: Verify the EC2 instance in the AWS Console</p>
+            <img src="images/Screenshot (65).png" alt="Step 3">
+            <p>Step 4:<strong>Connection Method- AWS Console:</strong></p>
+
+            <p> Click "Connect" button → Choose "EC2 Instance Connect" tab & Click "Connect" to open browser terminal</p>
+            <img src="images/Screenshot (66).png" alt="Step 4">
+            <p>Step 5:<strong>Configure the EBS Volume:</strong></p>
+<p>Once connected, run these commands in order:</p>
+
+<p>List available disks: <code>lsblk</code></p>
+
+<p>Format the volume (first time only): <code>sudo mkfs -t xfs /dev/sdf</code></p>
+
+<p>Create mount directory: <code>sudo mkdir /mnt/additional-storage</code></p>
+
+<p>Mount the volume: <code>sudo mount /dev/sdf /mnt/additional-storage</code></p>
+
+<p>Verify mount: <code>df -h</code></p>
+            <img src="images/Screenshot (67).png" alt="Step 5">
+            <img src="images/Screenshot (68).png" alt="Step 6">
+            <p>10GB EBS volume is now attached and ready to use at <code>/mnt/additional-storage/</code></p>
+        </div>
+
+   
     </main>
 </body>
 </html>
